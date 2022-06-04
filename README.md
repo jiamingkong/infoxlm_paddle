@@ -37,7 +37,13 @@ Please follow the steps below to prepare the weights for paddlepaddle.
 3. Run the following commands to make sure the paddlepaddle weights are correct:
 
     ```bash
-    python -m pytest ./tests/test_tokenizer.py
-    python -m pytest ./tests/test_model.py
+    python -m pytest ./tests/
     ```
 
+    You should be able to pass the 3 included tests successfully. This means that:
+    - The tokenizer, after a dirty fix, is able to generated the same tokenized ids as the huggingface implementation
+    - The model weights are correct after conversion
+
+## 2. Train the model for downstream tasks
+
+Following the original paper in 

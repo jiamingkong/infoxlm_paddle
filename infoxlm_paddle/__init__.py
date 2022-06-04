@@ -1,1 +1,2 @@
-from infoxlm_paddle.modeling import *
+from .modeling import *
+from .tokenizer import *
