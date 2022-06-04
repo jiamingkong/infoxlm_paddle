@@ -22,14 +22,14 @@ import paddle.nn.functional as F
 from paddlenlp.transformers import PretrainedModel, register_base_model
 
 __all__ = [
-    'InfoXLMModel',
-    'InfoXLMPretrainedModel',
-    'InfoXLMForSequenceClassification',
-    'InfoXLMForTokenClassification',
-    'InfoXLMForQuestionAnswering',
-    'InfoXLMForMaskedLM',
-    'InfoXLMForMultipleChoice',
-    'InfoXLMForCausalLM',
+    "InfoXLMModel",
+    "InfoXLMPretrainedModel",
+    "InfoXLMForSequenceClassification",
+    "InfoXLMForTokenClassification",
+    "InfoXLMForQuestionAnswering",
+    "InfoXLMForMaskedLM",
+    "InfoXLMForMultipleChoice",
+    "InfoXLMForCausalLM",
 ]
 
 
@@ -38,19 +38,21 @@ class RobertaEmbeddings(nn.Layer):
     Include embeddings from word, position and token_type embeddings.
     """
 
-    def __init__(self,
-                 vocab_size,
-                 hidden_size=768,
-                 hidden_dropout_prob=0.1,
-                 max_position_embeddings=512,
-                 type_vocab_size=16,
-                 pad_token_id=0,
-                 cls_token_id=101):
+    def __init__(
+        self,
+        vocab_size,
+        hidden_size=768,
+        hidden_dropout_prob=0.1,
+        max_position_embeddings=512,
+        type_vocab_size=16,
+        pad_token_id=0,
+        cls_token_id=101,
+    ):
         super(RobertaEmbeddings, self).__init__()
         self.word_embeddings = nn.Embedding(
-            vocab_size, hidden_size, padding_idx=pad_token_id)
-        self.position_embeddings = nn.Embedding(max_position_embeddings,
-                                                hidden_size)
+            vocab_size, hidden_size, padding_idx=pad_token_id
+        )
+        self.position_embeddings = nn.Embedding(max_position_embeddings, hidden_size)
         self.token_type_embeddings = nn.Embedding(type_vocab_size, hidden_size)
         self.LayerNorm = nn.LayerNorm(hidden_size, epsilon=1e-05)
         self.dropout = nn.Dropout(hidden_dropout_prob)
@@ -62,8 +64,9 @@ class RobertaEmbeddings(nn.Layer):
             # maybe need use shape op to unify static graph and dynamic graph
             ones = paddle.ones_like(input_ids, dtype="int64")
             seq_length = paddle.cumsum(ones, axis=-1)
-            if self.cls_token_id == 0 or input_ids[0][
-                    0] == 0:  # postion_ids for RobertaBPETokenizer
+            if (
+                self.cls_token_id == 0 or input_ids[0][0] == 0
+            ):  # postion_ids for RobertaBPETokenizer
                 position_ids = seq_length + self.padding_idx + 1 - ones
             else:  # postion_ids for RobertaTokenizer
                 position_ids = seq_length - ones
@@ -71,12 +74,12 @@ class RobertaEmbeddings(nn.Layer):
         if token_type_ids is None:
             token_type_ids = paddle.zeros_like(input_ids, dtype="int64")
 
-        input_embedings = self.word_embeddings(input_ids) # this part is ok
-        position_embeddings = self.position_embeddings(position_ids) # this is also ok
+        input_embedings = self.word_embeddings(input_ids)  # this part is ok
+        position_embeddings = self.position_embeddings(position_ids)  # this is also ok
         token_type_embeddings = self.token_type_embeddings(token_type_ids)
         # print(token_type_embeddings)
         embeddings = input_embedings + position_embeddings + token_type_embeddings
-        
+
         embeddings = self.LayerNorm(embeddings)
         embeddings = self.dropout(embeddings)
         # scale it?
@@ -97,6 +100,7 @@ class RobertaPooler(nn.Layer):
         pooled_output = self.dense(first_token_tensor)
         pooled_output = self.activation(pooled_output)
         return pooled_output
+
 
 # class RobertaSelfAttention(nn.Layer):
 #     def __init__(self, num_attention_heads, hidden_size, attention_probs_dropout_prob):
@@ -135,7 +139,7 @@ class InfoXLMPretrainedModel(PretrainedModel):
             "num_hidden_layers": 12,
             "type_vocab_size": 2,
             "vocab_size": 250002,
-            "pad_token_id": 0
+            "pad_token_id": 0,
         },
         "infoxlm-large": {
             "attention_probs_dropout_prob": 0.1,
@@ -149,21 +153,17 @@ class InfoXLMPretrainedModel(PretrainedModel):
             "num_hidden_layers": 24,
             "type_vocab_size": 2,
             "vocab_size": 250002,
-            "pad_token_id": 0
+            "pad_token_id": 0,
         },
     }
     resource_files_names = {"model_state": "model_state.pdparams"}
     pretrained_resource_files_map = {
         "model_state": {
-            "infoxlm-base":
-            "https://bj.bcebos.com/paddlenlp/models/transformers/roberta_base/roberta_chn_base.pdparams",
-            "infoxlm-large":
-            "https://bj.bcebos.com/paddlenlp/models/transformers/roberta_large/roberta_chn_large.pdparams"
+            "infoxlm-base": "https://bj.bcebos.com/paddlenlp/models/transformers/roberta_base/roberta_chn_base.pdparams",
+            "infoxlm-large": "https://bj.bcebos.com/paddlenlp/models/transformers/roberta_large/roberta_chn_large.pdparams",
         }
     }
     base_model_prefix = "roberta"
-
-
 
     def init_weights(self, layer):
         """ Initialization hook """
@@ -174,16 +174,17 @@ class InfoXLMPretrainedModel(PretrainedModel):
                 paddle.tensor.normal(
                     mean=0.0,
                     std=self.initializer_range
-                    if hasattr(self, "initializer_range") else
-                    self.roberta.config["initializer_range"],
-                    shape=layer.weight.shape))
+                    if hasattr(self, "initializer_range")
+                    else self.roberta.config["initializer_range"],
+                    shape=layer.weight.shape,
+                )
+            )
         elif isinstance(layer, nn.LayerNorm):
-            layer._epsilon = self.layer_norm_eps if hasattr(
-                self,
-                "layer_norm_eps") else self.roberta.config["layer_norm_eps"]
-
-
-
+            layer._epsilon = (
+                self.layer_norm_eps
+                if hasattr(self, "layer_norm_eps")
+                else self.roberta.config["layer_norm_eps"]
+            )
 
 
 @register_base_model
@@ -245,29 +246,36 @@ class InfoXLMModel(InfoXLMPretrainedModel):
             Defaults to `101`.
     """
 
-    def __init__(self,
-                 vocab_size,
-                 hidden_size=768,
-                 num_hidden_layers=12,
-                 num_attention_heads=12,
-                 intermediate_size=3072,
-                 hidden_act="gelu",
-                 hidden_dropout_prob=0.1,
-                 attention_probs_dropout_prob=0.1,
-                 max_position_embeddings=512,
-                 type_vocab_size=16,
-                 initializer_range=0.02,
-                 pad_token_id=0,
-                 layer_norm_eps=1e-12,
-                 cls_token_id=101):
+    def __init__(
+        self,
+        vocab_size,
+        hidden_size=768,
+        num_hidden_layers=12,
+        num_attention_heads=12,
+        intermediate_size=3072,
+        hidden_act="gelu",
+        hidden_dropout_prob=0.1,
+        attention_probs_dropout_prob=0.1,
+        max_position_embeddings=512,
+        type_vocab_size=16,
+        initializer_range=0.02,
+        pad_token_id=0,
+        layer_norm_eps=1e-12,
+        cls_token_id=101,
+    ):
         super(InfoXLMModel, self).__init__()
         self.pad_token_id = pad_token_id
         self.initializer_range = initializer_range
         self.layer_norm_eps = layer_norm_eps
         self.embeddings = RobertaEmbeddings(
-            vocab_size, hidden_size, hidden_dropout_prob,
-            max_position_embeddings, type_vocab_size, pad_token_id,
-            cls_token_id)
+            vocab_size,
+            hidden_size,
+            hidden_dropout_prob,
+            max_position_embeddings,
+            type_vocab_size,
+            pad_token_id,
+            cls_token_id,
+        )
         encoder_layer = nn.TransformerEncoderLayer(
             hidden_size,
             num_attention_heads,
@@ -275,19 +283,20 @@ class InfoXLMModel(InfoXLMPretrainedModel):
             dropout=hidden_dropout_prob,
             activation=hidden_act,
             attn_dropout=attention_probs_dropout_prob,
-            act_dropout=0)
+            act_dropout=0,
+        )
         self.encoder = nn.TransformerEncoder(encoder_layer, num_hidden_layers)
         self.pooler = RobertaPooler(hidden_size)
         self.apply(self.init_weights)
 
-
-
-    def forward(self,
-                input_ids,
-                token_type_ids=None,
-                position_ids=None,
-                attention_mask=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        position_ids=None,
+        attention_mask=None,
+        output_hidden_states=False,
+    ):
         r"""
         Args:
             input_ids (Tensor):
@@ -359,17 +368,20 @@ class InfoXLMModel(InfoXLMPretrainedModel):
         """
         if attention_mask is None:
             attention_mask = paddle.unsqueeze(
-                (input_ids == self.pad_token_id
-                 ).astype(self.pooler.dense.weight.dtype) * -1e4,
-                axis=[1, 2])
+                (input_ids == self.pad_token_id).astype(self.pooler.dense.weight.dtype)
+                * -1e4,
+                axis=[1, 2],
+            )
         elif attention_mask.ndim == 2:
-            attention_mask = paddle.unsqueeze(
-                attention_mask, axis=[1, 2]).astype(paddle.get_default_dtype())
+            attention_mask = paddle.unsqueeze(attention_mask, axis=[1, 2]).astype(
+                paddle.get_default_dtype()
+            )
             attention_mask = (1.0 - attention_mask) * -1e4
         embedding_output = self.embeddings(
             input_ids=input_ids,
             position_ids=position_ids,
-            token_type_ids=token_type_ids)
+            token_type_ids=token_type_ids,
+        )
 
         # up to this line things are good
         if output_hidden_states:
@@ -388,9 +400,6 @@ class InfoXLMModel(InfoXLMPretrainedModel):
             return sequence_output, pooled_output
 
 
-
-
-
 class InfoXLMForQuestionAnswering(InfoXLMPretrainedModel):
     r"""
     Roberta Model with a linear layer on top of the hidden-states output to compute `span_start_logits`
@@ -407,15 +416,14 @@ class InfoXLMForQuestionAnswering(InfoXLMPretrainedModel):
         self.classifier = nn.Linear(self.roberta.config["hidden_size"], 2)
         self.apply(self.init_weights)
 
-
-
     def forward(
-            self,
-            input_ids,
-            token_type_ids=None,
-            position_ids=None,
-            attention_mask=None,
-            output_hidden_states=False, ):
+        self,
+        input_ids,
+        token_type_ids=None,
+        position_ids=None,
+        attention_mask=None,
+        output_hidden_states=False,
+    ):
         r"""
         Args:
             input_ids (Tensor):
@@ -467,9 +475,11 @@ class InfoXLMForQuestionAnswering(InfoXLMPretrainedModel):
             token_type_ids=token_type_ids,
             position_ids=position_ids,
             attention_mask=attention_mask,
-            output_hidden_states=output_hidden_states, )
-        sequence_output = encoder_outputs[
-            -1] if output_hidden_states else encoder_outputs
+            output_hidden_states=output_hidden_states,
+        )
+        sequence_output = (
+            encoder_outputs[-1] if output_hidden_states else encoder_outputs
+        )
         logits = self.classifier(sequence_output)
         logits = paddle.transpose(logits, perm=[2, 0, 1])
         start_logits, end_logits = paddle.unstack(x=logits, axis=0)
@@ -478,9 +488,6 @@ class InfoXLMForQuestionAnswering(InfoXLMPretrainedModel):
             return start_logits, end_logits, encoder_outputs
         else:
             return start_logits, end_logits
-
-
-
 
 
 class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
@@ -503,20 +510,22 @@ class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
         super(InfoXLMForSequenceClassification, self).__init__()
         self.num_classes = num_classes
         self.roberta = roberta  # allow roberta to be config
-        self.dropout = nn.Dropout(dropout if dropout is not None else
-                                  self.roberta.config["hidden_dropout_prob"])
-        self.classifier = nn.Linear(self.roberta.config["hidden_size"],
-                                    num_classes)
+        self.dropout = nn.Dropout(
+            dropout
+            if dropout is not None
+            else self.roberta.config["hidden_dropout_prob"]
+        )
+        self.classifier = nn.Linear(self.roberta.config["hidden_size"], num_classes)
         self.apply(self.init_weights)
 
-
-
-    def forward(self,
-                input_ids,
-                token_type_ids=None,
-                position_ids=None,
-                attention_mask=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        position_ids=None,
+        attention_mask=None,
+        output_hidden_states=False,
+    ):
         r"""
         Args:
             input_ids (Tensor):
@@ -564,16 +573,14 @@ class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
             token_type_ids=token_type_ids,
             position_ids=position_ids,
             attention_mask=attention_mask,
-            output_hidden_states=output_hidden_states)
+            output_hidden_states=output_hidden_states,
+        )
 
         pooled_output = self.dropout(pooled_output)
         logits = self.classifier(pooled_output)
         if output_hidden_states:
             return logits, encoder_outputs
         return logits
-
-
-
 
 
 class InfoXLMForTokenClassification(InfoXLMPretrainedModel):
@@ -596,20 +603,22 @@ class InfoXLMForTokenClassification(InfoXLMPretrainedModel):
         super(InfoXLMForTokenClassification, self).__init__()
         self.num_classes = num_classes
         self.roberta = roberta  # allow roberta to be config
-        self.dropout = nn.Dropout(dropout if dropout is not None else
-                                  self.roberta.config["hidden_dropout_prob"])
-        self.classifier = nn.Linear(self.roberta.config["hidden_size"],
-                                    num_classes)
+        self.dropout = nn.Dropout(
+            dropout
+            if dropout is not None
+            else self.roberta.config["hidden_dropout_prob"]
+        )
+        self.classifier = nn.Linear(self.roberta.config["hidden_size"], num_classes)
         self.apply(self.init_weights)
 
-
-
-    def forward(self,
-                input_ids,
-                token_type_ids=None,
-                position_ids=None,
-                attention_mask=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        position_ids=None,
+        attention_mask=None,
+        output_hidden_states=False,
+    ):
         r"""
         Args:
             input_ids (Tensor):
@@ -657,18 +666,17 @@ class InfoXLMForTokenClassification(InfoXLMPretrainedModel):
             token_type_ids=token_type_ids,
             position_ids=position_ids,
             attention_mask=attention_mask,
-            output_hidden_states=output_hidden_states)
-        sequence_output = encoder_outputs[
-            -1] if output_hidden_states else encoder_outputs
+            output_hidden_states=output_hidden_states,
+        )
+        sequence_output = (
+            encoder_outputs[-1] if output_hidden_states else encoder_outputs
+        )
         sequence_output = self.dropout(sequence_output)
         logits = self.classifier(sequence_output)
 
         if output_hidden_states:
             return logits, encoder_outputs
         return logits
-
-
-
 
 
 class InfoXLMForMultipleChoice(InfoXLMPretrainedModel):
@@ -681,34 +689,45 @@ class InfoXLMForMultipleChoice(InfoXLMPretrainedModel):
 
         self.apply(self.init_weights)
 
-
-
-    def forward(self,
-                input_ids=None,
-                token_type_ids=None,
-                attention_mask=None,
-                position_ids=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids=None,
+        token_type_ids=None,
+        attention_mask=None,
+        position_ids=None,
+        output_hidden_states=False,
+    ):
 
         num_choices = input_ids.shape[1]
 
-        flat_input_ids = input_ids.reshape(
-            (-1, input_ids.shape[-1])) if input_ids is not None else None
-        flat_position_ids = position_ids.reshape(
-            (-1, position_ids.shape[-1])) if position_ids is not None else None
-        flat_token_type_ids = token_type_ids.reshape(
-            (-1,
-             token_type_ids.shape[-1])) if token_type_ids is not None else None
-        flat_attention_mask = attention_mask.reshape(
-            (-1,
-             attention_mask.shape[-1])) if attention_mask is not None else None
+        flat_input_ids = (
+            input_ids.reshape((-1, input_ids.shape[-1]))
+            if input_ids is not None
+            else None
+        )
+        flat_position_ids = (
+            position_ids.reshape((-1, position_ids.shape[-1]))
+            if position_ids is not None
+            else None
+        )
+        flat_token_type_ids = (
+            token_type_ids.reshape((-1, token_type_ids.shape[-1]))
+            if token_type_ids is not None
+            else None
+        )
+        flat_attention_mask = (
+            attention_mask.reshape((-1, attention_mask.shape[-1]))
+            if attention_mask is not None
+            else None
+        )
 
         encoder_outputs, pooled_output = self.roberta(
             flat_input_ids,
             position_ids=flat_position_ids,
             token_type_ids=flat_token_type_ids,
             attention_mask=flat_attention_mask,
-            output_hidden_states=output_hidden_states)
+            output_hidden_states=output_hidden_states,
+        )
 
         pooled_output = self.dropout(pooled_output)
         logits = self.classifier(pooled_output)
@@ -717,9 +736,6 @@ class InfoXLMForMultipleChoice(InfoXLMPretrainedModel):
         if output_hidden_states:
             return output, encoder_outputs
         return output
-
-
-
 
 
 class InfoXLMForMaskedLM(InfoXLMPretrainedModel):
@@ -736,9 +752,9 @@ class InfoXLMForMaskedLM(InfoXLMPretrainedModel):
         super().__init__()
 
         self.roberta = roberta
-        hidden_size = self.roberta.config['hidden_size']
-        layer_norm_eps = self.roberta.config['layer_norm_eps']
-        vocab_size = self.roberta.config['vocab_size']
+        hidden_size = self.roberta.config["hidden_size"]
+        layer_norm_eps = self.roberta.config["layer_norm_eps"]
+        vocab_size = self.roberta.config["vocab_size"]
 
         self.lm_head = InfoXLMLMHead(hidden_size, layer_norm_eps, vocab_size)
 
@@ -750,14 +766,14 @@ class InfoXLMForMaskedLM(InfoXLMPretrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.lm_head.decoder = new_embeddings
 
-
-
-    def forward(self,
-                input_ids=None,
-                attention_mask=None,
-                token_type_ids=None,
-                position_ids=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids=None,
+        attention_mask=None,
+        token_type_ids=None,
+        position_ids=None,
+        output_hidden_states=False,
+    ):
         r"""
 
         Args:
@@ -809,16 +825,17 @@ class InfoXLMForMaskedLM(InfoXLMPretrainedModel):
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
             position_ids=position_ids,
-            output_hidden_states=output_hidden_states)
+            output_hidden_states=output_hidden_states,
+        )
 
-        sequence_output = encoder_outputs[
-            -1] if output_hidden_states else encoder_outputs
+        sequence_output = (
+            encoder_outputs[-1] if output_hidden_states else encoder_outputs
+        )
         prediction_scores = self.lm_head(sequence_output)
 
         if output_hidden_states:
             return prediction_scores, encoder_outputs
         return prediction_scores
-
 
 
 class InfoXLMLMHead(nn.Layer):
@@ -842,8 +859,6 @@ class InfoXLMLMHead(nn.Layer):
         return x
 
 
-
-
 class InfoXLMForCausalLM(InfoXLMPretrainedModel):
     """
     Roberta Model with a `Causal language modeling` head on top.
@@ -858,9 +873,9 @@ class InfoXLMForCausalLM(InfoXLMPretrainedModel):
         super().__init__()
 
         self.roberta = roberta
-        hidden_size = self.roberta.config['hidden_size']
-        layer_norm_eps = self.roberta.config['layer_norm_eps']
-        vocab_size = self.roberta.config['vocab_size']
+        hidden_size = self.roberta.config["hidden_size"]
+        layer_norm_eps = self.roberta.config["layer_norm_eps"]
+        vocab_size = self.roberta.config["vocab_size"]
 
         self.lm_head = InfoXLMLMHead(hidden_size, layer_norm_eps, vocab_size)
 
@@ -872,14 +887,14 @@ class InfoXLMForCausalLM(InfoXLMPretrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.lm_head.decoder = new_embeddings
 
-
-
-    def forward(self,
-                input_ids=None,
-                attention_mask=None,
-                token_type_ids=None,
-                position_ids=None,
-                output_hidden_states=False):
+    def forward(
+        self,
+        input_ids=None,
+        attention_mask=None,
+        token_type_ids=None,
+        position_ids=None,
+        output_hidden_states=False,
+    ):
         r"""
         Args:
             input_ids (Tensor):
@@ -931,22 +946,21 @@ class InfoXLMForCausalLM(InfoXLMPretrainedModel):
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
             position_ids=position_ids,
-            output_hidden_states=output_hidden_states)
+            output_hidden_states=output_hidden_states,
+        )
 
-        sequence_output = encoder_outputs[
-            -1] if output_hidden_states else encoder_outputs
+        sequence_output = (
+            encoder_outputs[-1] if output_hidden_states else encoder_outputs
+        )
         prediction_scores = self.lm_head(sequence_output)
 
         if output_hidden_states:
             return prediction_scores, encoder_outputs
         return prediction_scores
 
-
-    def prepare_inputs_for_generation(self,
-                                      input_ids,
-                                      past=None,
-                                      attention_mask=None,
-                                      **model_kwargs):
+    def prepare_inputs_for_generation(
+        self, input_ids, past=None, attention_mask=None, **model_kwargs
+    ):
         input_shape = input_ids.shape
         # if model is used as a decoder in encoder-decoder model, the decoder attention mask is created on the fly
         if attention_mask is None:
@@ -959,13 +973,15 @@ class InfoXLMForCausalLM(InfoXLMPretrainedModel):
         return {
             "input_ids": input_ids,
             "attention_mask": attention_mask,
-            "past_key_values": past
+            "past_key_values": past,
         }
 
     def _reorder_cache(self, past, beam_idx):
         reordered_past = ()
         for layer_past in past:
-            reordered_past += (tuple(
-                past_state.index_select(0, beam_idx)
-                for past_state in layer_past), )
+            reordered_past += (
+                tuple(
+                    past_state.index_select(0, beam_idx) for past_state in layer_past
+                ),
+            )
         return reordered_past
