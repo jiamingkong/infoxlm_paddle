@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# large weights
+model_checkpoints/converted_paddle/*.pdparams
+model_checkpoints/original_pytorch_huggingface/*.bin
+
+.vscode/
