@@ -3,11 +3,21 @@ import pytest
 from transformers import XLMRobertaTokenizer, AutoTokenizer
 
 import os
-import torch
+
+
+from infoxlm_paddle import InfoXLMTokenizer, InfoXLMModel
+import os
+import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-# up one level
 ROOT = os.path.dirname(HERE)
+
+
+sentencepiece_model_file = os.path.join(
+    ROOT, "model_checkpoints", "original_pytorch_huggingface", "sentencepiece.bpe.model"
+)
+do_lower_case = False
+remove_space = True
 
 test_sentences = [
     "This is a test sentence.",  # [0.2496]
@@ -19,7 +29,7 @@ test_sentences = [
 ]
 
 
-def test_get_tokenizer():
+def test_get_original_tokenizer():
     tokenizer = XLMRobertaTokenizer.from_pretrained(
         os.path.join(ROOT, "model_checkpoints/original_pytorch_huggingface"),
         local_files_only=True,
@@ -27,14 +37,49 @@ def test_get_tokenizer():
     assert isinstance(tokenizer, XLMRobertaTokenizer)
 
 
-def test_results_are_correct():
-    my_tokenizer = XLMRobertaTokenizer.from_pretrained(
+def test_my_tokenizer():
+
+    my_tokenizer = InfoXLMTokenizer(
+        sentencepiece_model_file=sentencepiece_model_file,
+        do_lower_case=do_lower_case,
+        remove_space=remove_space,
+    )
+
+    assert True
+
+
+def test_my_tokenizing_functions():
+    my_tokenizer = InfoXLMTokenizer(
+        sentencepiece_model_file=sentencepiece_model_file,
+        do_lower_case=do_lower_case,
+        remove_space=remove_space,
+    )
+    for sentence in test_sentences:
+        tokens_lhs = my_tokenizer(sentence, max_seq_len=4)
+        # assert isinstance(tokens_lhs, dict)
+        # assert isinstance(tokens_lhs["input_ids"], list)
+        lst = tokens_lhs["input_ids"]
+        assert len(lst) == 4
+    for sentence in test_sentences:
+        tokens_lhs = my_tokenizer(sentence, max_seq_len=128, pad_to_max_seq_len=True)
+        # assert isinstance(tokens_lhs, dict)
+        # assert isinstance(tokens_lhs["input_ids"], list)
+        lst = tokens_lhs["input_ids"]
+        assert len(lst) == 128
+        assert lst[-1] == my_tokenizer.pad_token_id
+
+
+def test_compare_both_tokenizers():
+    tokenizer = XLMRobertaTokenizer.from_pretrained(
         os.path.join(ROOT, "model_checkpoints/original_pytorch_huggingface"),
         local_files_only=True,
     )
-    true_tokenizer = AutoTokenizer.from_pretrained("microsoft/infoxlm-base")
+    my_tokenizer = InfoXLMTokenizer(
+        sentencepiece_model_file=sentencepiece_model_file,
+        do_lower_case=do_lower_case,
+        remove_space=remove_space,
+    )
     for sentence in test_sentences:
-        my_tokens = my_tokenizer(sentence, return_tensors="pt")
-        true_tokens = true_tokenizer(sentence, return_tensors="pt")
-        print(my_tokens["input_ids"])
-        assert torch.equal(my_tokens["input_ids"], true_tokens["input_ids"])
+        tokens_lhs = tokenizer(sentence, "and a premise")
+        tokens_rhs = my_tokenizer(sentence, "and a premise")
+        assert tokens_lhs["input_ids"] == tokens_rhs["input_ids"]

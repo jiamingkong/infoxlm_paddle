@@ -129,9 +129,10 @@ dmypy.json
 .pyre/
 
 # large weights
-model_checkpoints/converted_paddle/*.pdparams
-model_checkpoints/original_pytorch_huggingface/*.bin
-
+model_checkpoints/*/*.pdparams
+model_checkpoints/*/*.bin
+model_checkpoints/*/*.zip
 .vscode/
 *.ipynb
 .ipynb_checkpoints/
+

@@ -33,7 +33,7 @@ def need_transpose(key, value_dim):
         if d in key:
             return False
     # only transpose if value is 2d
-    if value_dim == 2 and "proj" not in key:
+    if value_dim == 2:
         return True
 
 
@@ -64,7 +64,9 @@ def convert_torch_to_paddle(torch_weight_path, paddle_weight_path):
             continue
         if "pred_layer.proj.bias" in key:
             key = key.replace("pred_layer.proj.bias", "pred_layer.bias")
-        print(f"{_key} ==> {key} ({value.shape}, {transposed})")
+        print(
+            f"{_key} ==> {key} ({value.shape}, transposed = {transposed}, sum = {value.sum()})"
+        )
         paddle_weights[key] = paddle.to_tensor(value.numpy())
 
     paddle.save(paddle_weights, paddle_weight_path)

@@ -197,7 +197,9 @@ class InfoXLMTokenizer(AlbertEnglishTokenizer):
 
         return outputs
 
-    def _tokenize(self, text: str) -> List[str]:
+    def _tokenize(
+        self, text: str, max_seq_len=None, pad_to_max_seq_len=False, **kwargs
+    ) -> List[str]:
         """Tokenize a string."""
         text = self.preprocess_text(text)
         pieces = self.sp_model.EncodeAsPieces(text)
@@ -220,10 +222,17 @@ class InfoXLMTokenizer(AlbertEnglishTokenizer):
             else:
                 new_pieces.append(piece)
 
+        if max_seq_len is not None:
+            if len(new_pieces) > max_seq_len:
+                new_pieces = new_pieces[:max_seq_len]
+            if pad_to_max_seq_len:
+                while len(new_pieces) < max_seq_len:
+                    new_pieces.append(self.pad_token)
+
         return new_pieces
 
-    def tokenize(self, text):
-        return self._tokenize(text)
+    def tokenize(self, text, **kwargs):
+        return self._tokenize(text, **kwargs)
 
     def _convert_token_to_id(self, token):
         """Converts a token (str) to an id using the vocab. NOTE: there is some offset issue with pad_token_idx """
@@ -277,7 +286,7 @@ class InfoXLMTokenizer(AlbertEnglishTokenizer):
         cls = [0]
         if token_ids_1 is None:
             return cls + token_ids_0 + sep
-        return cls + token_ids_0 + sep + token_ids_1 + sep
+        return cls + token_ids_0 + sep + sep + token_ids_1 + sep
 
     def get_special_tokens_mask(
         self, token_ids_0, token_ids_1=None, already_has_special_tokens=False

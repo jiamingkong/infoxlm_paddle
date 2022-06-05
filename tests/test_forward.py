@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from transformers import XLMRobertaTokenizer, XLMRobertaModel, AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoTokenizer
 
-# from paddlenlp.transformers.fnet.tokenizer import FNetTokenizer
-from infoxlm_paddle import InfoXLMTokenizer, dirty_fix, InfoXLMModel
+from infoxlm_paddle import InfoXLMTokenizer, InfoXLMModel
 import os
 import torch
 import numpy as np
@@ -45,7 +44,7 @@ test_sentences = [
     "இவ்வில் ஒரு நிர்வாகம்.",
     "产品 和 地理 是 什么 使 奶油 抹 霜 工作 .",
     "Man verliert die Dinge auf die folgende Ebene , wenn sich die Leute erinnern .",
-    "अगर लोग याद करते हैं तो आप निम ् न स ् तर पर चीज ़ ें खो देते हैं ."
+    "अगर लोग याद करते हैं तो आप निम ् न स ् तर पर चीज ़ ें खो देते हैं .",
 ]
 
 

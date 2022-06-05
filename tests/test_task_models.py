@@ -1,6 +1,10 @@
 # to test the task specific models
 
-from infoxlm_paddle import InfoXLMTokenizer, InfoXLMModel, InfoXLMForSequenceClassification
+from infoxlm_paddle import (
+    InfoXLMTokenizer,
+    InfoXLMModel,
+    InfoXLMForSequenceClassification,
+)
 
 import os
 import numpy as np
@@ -26,9 +30,10 @@ my_base_model = InfoXLMModel.from_pretrained(
     os.path.join(ROOT, "model_checkpoints/converted_paddle")
 )
 
+
 def test_sequence_classification_model():
     my_sequence_model = InfoXLMForSequenceClassification(
-        my_base_model,num_classes=3,dropout=0.1
+        my_base_model, num_classes=3, dropout=0.1
     )
     my_sequence_model.eval()
     test_sentences = [
@@ -41,15 +46,15 @@ def test_sequence_classification_model():
         "产品 和 地理 是 什么 使 奶油 抹 霜 工作 .",
     ]
     for sentence in test_sentences:
-        tokens_rhs = my_tokenizer(sentence, "another sentence just to try out the text pair")
+        tokens_rhs = my_tokenizer(
+            sentence, "another sentence just to try out the text pair"
+        )
         # tokens_rhs = dirty_fix(tokens_lhs)
         input_ids = paddle.to_tensor([tokens_rhs["input_ids"]])
         token_type_ids = paddle.to_tensor([tokens_rhs["token_type_ids"]])
 
         # run it through the model
-        logits = my_sequence_model(input_ids, token_type_ids = token_type_ids)
+        logits = my_sequence_model(input_ids, token_type_ids=token_type_ids)
         logits = logits.numpy()
         print(logits)
         assert logits.shape == (1, 3)
-
-    

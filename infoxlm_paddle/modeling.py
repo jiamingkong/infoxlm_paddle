@@ -33,6 +33,31 @@ __all__ = [
 ]
 
 
+class RobertaClassificationHead(nn.Layer):
+    def __init__(self, embed_dim, num_labels, dropout=0.1):
+        super(RobertaClassificationHead, self).__init__()
+        self.num_labels = num_labels
+        self.dense = nn.Linear(embed_dim, embed_dim)
+        if dropout is not None:
+            self.dropout = nn.Dropout(dropout)
+        else:
+            self.dropout = nn.Dropout(0.01)
+        self.out_proj = nn.Linear(embed_dim, num_labels)
+
+    def forward(self, input):
+        # print(input)
+        x = input[:, 0, :]  # take the head
+        x = self.dropout(x)
+        x = self.dense(x)
+        # print("after dense", x.sum())
+        x = nn.functional.tanh(x)
+        # print("after tanh", x.sum())
+        x = self.dropout(x)
+        x = self.out_proj(x)
+        # print("after out_proj", x.sum())
+        return x
+
+
 class RobertaEmbeddings(nn.Layer):
     r"""
     Include embeddings from word, position and token_type embeddings.
@@ -370,6 +395,7 @@ class InfoXLMModel(InfoXLMPretrainedModel):
             attention_mask = paddle.unsqueeze(
                 (input_ids == self.pad_token_id).astype(self.pooler.dense.weight.dtype)
                 * -1e4,
+                # (input_ids == self.pad_token_id).astype(int),
                 axis=[1, 2],
             )
         elif attention_mask.ndim == 2:
@@ -510,12 +536,15 @@ class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
         super(InfoXLMForSequenceClassification, self).__init__()
         self.num_classes = num_classes
         self.roberta = roberta  # allow roberta to be config
-        self.dropout = nn.Dropout(
-            dropout
-            if dropout is not None
-            else self.roberta.config["hidden_dropout_prob"]
+        # self.dropout = nn.Dropout(
+        #     dropout
+        #     if dropout is not None
+        #     else self.roberta.config["hidden_dropout_prob"]
+        # )
+        # self.classifier = nn.Linear(self.roberta.config["hidden_size"], num_classes)
+        self.classifier = RobertaClassificationHead(
+            self.roberta.config["hidden_size"], num_classes, dropout=dropout
         )
-        self.classifier = nn.Linear(self.roberta.config["hidden_size"], num_classes)
         self.apply(self.init_weights)
 
     def forward(
@@ -576,8 +605,12 @@ class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
             output_hidden_states=output_hidden_states,
         )
 
-        pooled_output = self.dropout(pooled_output)
-        logits = self.classifier(pooled_output)
+        # pooled_output = self.dropout(pooled_output)
+        # logits = self.classifier(pooled_output)
+        # print("encoder_outputs sum:", encoder_outputs.sum().numpy())
+        logits = self.classifier(encoder_outputs)
+        # print("logits sum:", logits.sum().numpy())
+
         if output_hidden_states:
             return logits, encoder_outputs
         return logits
