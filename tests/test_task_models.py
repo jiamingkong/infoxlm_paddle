@@ -51,10 +51,9 @@ def test_sequence_classification_model():
         )
         # tokens_rhs = dirty_fix(tokens_lhs)
         input_ids = paddle.to_tensor([tokens_rhs["input_ids"]])
-        token_type_ids = paddle.to_tensor([tokens_rhs["token_type_ids"]])
-
+        
         # run it through the model
-        logits = my_sequence_model(input_ids, token_type_ids=token_type_ids)
+        logits = my_sequence_model(input_ids)
         logits = logits.numpy()
         print(logits)
         assert logits.shape == (1, 3)
