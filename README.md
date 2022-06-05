@@ -64,7 +64,7 @@ The finetuned weights are provided for your convenience, the download instructio
 
 
 
-**To eval the model**
+## 3. To eval the model
 
 There is a cleaner script to evaluate the model on all 15 languages. Please download the finetuned weights as instructed above, then run the command below. 
 
@@ -101,3 +101,46 @@ There are a few key differences between our finetuning process:
 - The original paper evaluated the models for every 5000 steps, while ours was only evaluated at some epoch ends.
 
 The smaller batch size does hurt the performance by a bit, we noticed that the performance could vary from epoch to epoch wildly after the warm-up period. For example we obtained a checkpoint that scored 0.770 in ZH (almost 1.0% higher than that of the uploaded checkpoint), yet performs not as ideal in other languages.
+
+## 4. Exporting to TIPC 
+
+The exporting scripts has been included for making the model available for basic inference engine. If you have downloaded the finetuned weight and put it in `model_checkpoints/finetuned_paddle`, you can run the following command to generate the JIT optimized model:
+
+```
+python export_model.py --model_path=model_checkpoints/finetuned_paddle --save_inference_dir ./xnli_exported_model
+```
+
+Upon successful export, the target folder `xnli_exported_model` would have the following files:
+
+```
+xnli_exported_models/
+    added_tokens.json
+    inference.pdiparams
+    inference.pdiparams.info
+    inference.pdmodel
+    special_tokens_map.json
+    spiece.model
+    tokenizer_config.json
+```
+
+Then the inference service can load and applied using the included `infer.py`:
+
+```bash
+python .\infer.py \
+  --model_dir .\xnli_exported_models \
+  --use_gpu True \
+  --warmup 1
+  --text "You don't have to stay here.<sep>You can not leave."
+```
+
+To include an example, input into the text field in the format of `Premise text<sep>Hypothesis text`, the included model should return the following information:
+
+```
+[2022-06-05 23:07:24,056] [    INFO] - Adding <pad> to the vocabulary
+[2022-06-05 23:07:24,057] [    INFO] - Adding <mask> to the vocabulary
+[2022-06-05 23:07:24,057] [    INFO] - Adding <pad> to the vocabulary
+[2022-06-05 23:07:24,058] [    INFO] - Adding <mask> to the vocabulary
+[2022-06-05 23:07:24,058] [    INFO] - Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+text: You don't have to stay here. <sep> You can not leave., label_id: 0, prob: 0.8804811835289001, label: contradiction
+```
+

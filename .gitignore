@@ -135,4 +135,5 @@ model_checkpoints/*/*.zip
 .vscode/
 *.ipynb
 .ipynb_checkpoints/
-
+xnli_exported_models/
+*.npy

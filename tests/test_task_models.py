@@ -51,7 +51,7 @@ def test_sequence_classification_model():
         )
         # tokens_rhs = dirty_fix(tokens_lhs)
         input_ids = paddle.to_tensor([tokens_rhs["input_ids"]])
-        
+
         # run it through the model
         logits = my_sequence_model(input_ids)
         logits = logits.numpy()

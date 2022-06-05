@@ -83,3 +83,10 @@ def test_compare_both_tokenizers():
         tokens_lhs = tokenizer(sentence, "and a premise")
         tokens_rhs = my_tokenizer(sentence, "and a premise")
         assert tokens_lhs["input_ids"] == tokens_rhs["input_ids"]
+
+
+def test_get_tokenizer_from_pretrained():
+    tokenizer = InfoXLMTokenizer.from_pretrained(
+        os.path.join(ROOT, "model_checkpoints/finetuned_paddle")
+    )
+    assert tokenizer("This is a test")

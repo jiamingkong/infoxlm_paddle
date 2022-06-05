@@ -1,0 +1,6 @@
+{
+    "sentencepiece_model_file": "model_checkpoints/finetuned_paddle/sentencepiece.bpe.model",
+    "init_class": "InfoXLMTokenizer",
+    "do_lower_Case": false,
+    "remove_space": true
+}

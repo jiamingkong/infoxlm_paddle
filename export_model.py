@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from infoxlm_paddle import InfoXLMTokenizer, InfoXLMModel
+from infoxlm_paddle.tokenizer import InfoXLMTokenizer
+from infoxlm_paddle.modeling import InfoXLMForSequenceClassification
 import paddle
 import os
 import argparse
-
-from infoxlm_paddle.modeling import InfoXLMForSequenceClassification
 
 
 def get_args(add_help=True):
@@ -32,17 +31,20 @@ def get_args(add_help=True):
         An object which contains many parameters used for inference.
     """
     parser = argparse.ArgumentParser(
-        description='Paddlenlp Classification Training', add_help=add_help)
+        description="Paddlenlp Classification Training", add_help=add_help
+    )
     parser.add_argument(
         "--model_path",
         default=None,
         type=str,
         required=True,
-        help="Path of the trained model to be exported.", )
+        help="Path of the trained model to be exported.",
+    )
     parser.add_argument(
-        '--save_inference_dir',
-        default='./xlm_infer',
-        help='path where to save')
+        "--save_inference_dir",
+        default="./xnli_exported_models",
+        help="path where to save",
+    )
 
     args = parser.parse_args()
     return args
@@ -54,16 +56,18 @@ def export(args):
     tokenizer = InfoXLMTokenizer.from_pretrained(args.model_path)
     model.eval()
     import paddle
+
     # decorate model with jit.save
     model = paddle.jit.to_static(
         model,
         input_spec=[
             paddle.static.InputSpec(
-                shape=[None, None], dtype="int64",
-                name="input_ids"),  # input_ids
-            paddle.static.InputSpec(
-                shape=[None, None], dtype="int64", name="langs")  # langs
-        ])
+                shape=[None, None], dtype="int64", name="input_ids"
+            ),  # input_ids
+            # paddle.static.InputSpec(
+            #     shape=[None, None], dtype="int64", name="langs")  # langs
+        ],
+    )
     # save inference model
     paddle.jit.save(model, os.path.join(args.save_inference_dir, "inference"))
     tokenizer.save_pretrained(args.save_inference_dir)
