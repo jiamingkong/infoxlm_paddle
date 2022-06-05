@@ -1,4 +1,7 @@
+import sys
 import os
+# add the external folder to path:
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 from paddle import inference
 import numpy as np
 from scipy.special import softmax

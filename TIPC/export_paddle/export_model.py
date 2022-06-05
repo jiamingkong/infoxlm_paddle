@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
+import os
+# add the external folder to path:
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 from infoxlm_paddle.tokenizer import InfoXLMTokenizer
 from infoxlm_paddle.modeling import InfoXLMForSequenceClassification
 import paddle
-import os
 import argparse
 
 

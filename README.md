@@ -104,10 +104,12 @@ The results are shown here, comparing to the original paper report:
 
 ## 4. 模型推理部署
 
+### 4.1 导出模型
+
 我们提供了模型的导出和部署程序，如果您下载了微调后的权重（finetuned_paddle），您可以直接使用这个权重部署模型，如下：
 
 ```bash
-python export_model.py --model_path=model_checkpoints/finetuned_paddle --save_inference_dir ./xnli_exported_model
+python TIPC/export_paddle/export_model.py --model_path=model_checkpoints/finetuned_paddle --save_inference_dir ./xnli_exported_model
 ```
 
 导出成功后，目标文件夹`xnli_exported_model`会保存如下文件：
@@ -123,17 +125,15 @@ xnli_exported_models/
     tokenizer_config.json
 ```
 
+### 4.2 使用模型推理
+
 使用这个模型进行推理的操作如下：
 
 ```bash
-python .\infer.py \
-  --model_dir .\xnli_exported_models \
-  --use_gpu True \
-  --warmup 1
-  --text "You don't have to stay here.<sep>You can not leave."
+python TIPC/inference_paddle/infer.py --model_dir ./xnli_exported_models --use_gpu True --warmup 1 --text "You don't have to stay here.<sep>You can not leave."
 ```
 
-其中--text参数提供了本次推理的输入数据，格式为"前提<sep>假设"，语言无需额外指定，所有语言输入都能通过提供的sentencepiece模型进行分词。推理输出如下：
+其中--text参数提供了本次推理的输入数据，格式为`"前提<sep>假设"`，语言无需额外指定，所有语言输入都能通过提供的sentencepiece模型进行分词。推理输出如下：
 
 ```
 [2022-06-05 23:07:24,056] [    INFO] - Adding <pad> to the vocabulary
@@ -145,3 +145,4 @@ text: You don't have to stay here. <sep> You can not leave., label_id: 0, prob: 
 ```
 
 推理成功，结果为contradiction（概率0.880），与模型本身一致。
+
