@@ -1,22 +1,24 @@
 # infoxlm_paddle
-Implementing InfoXLM's code base and training process with [飞桨PaddlePaddle-源于产业实践的开源深度学习平台](https://www.paddlepaddle.org.cn/)
 
-## 0. Environment setup
 
-It's recommended to install paddlepaddle in a separate virtual environment, with pytorch cpu-only version accompanied for verification purposes.
+使用[飞桨PaddlePaddle-源于产业实践的开源深度学习平台](https://www.paddlepaddle.org.cn/) 深度学习框架复现InfoXLM 论文的实验结果
+
+## 0. 环境配置
+
+我们推荐在一个新的虚拟环境中使用飞桨PaddlePaddle。
 
 ```bash
 conda create -n infoxlm_paddle python=3.9.6
 source activate infoxlm_paddle
-
+conda install paddlepaddle-gpu==2.3.0 cudatoolkit=11.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/ -c conda-forge -n infoxlm_paddle
 ```
 
-## 1. Prepare the weights
+## 1. 准备原始权重
 
-Please follow the steps below to prepare the weights for paddlepaddle.
+微软团队给出的原始模型权重可以使用如下的命令导出为飞桨PaddlePaddle的权重文件。
 
-1. Download all the files from [InfoXLM](https://huggingface.co/microsoft/infoxlm-base/tree/main), and put it under `model_checkpoints/original_pytorch_huggingface`. The folder should look like:
-   
+1. 从 [Huggingface/InfoXLM](https://huggingface.co/microsoft/infoxlm-base/tree/main)下载所有的文件，并放置在目录`model_checkpoints/original_pytorch_huggingface`下，完成后，目录应该如下：
+
     ```
     model_checkpoints/
         original_pytorch_huggingface/
@@ -25,30 +27,28 @@ Please follow the steps below to prepare the weights for paddlepaddle.
             sentencepiece.bpe.model
             tokenizer.json
     ```
-2. Run the following command lines, **make sure you are in the infoxlm_paddle environment**:
+2. **确认已经进入刚才创建的infoxlm_paddle虚拟环境**，执行如下操作:
 
     ```bash
     cd model_checkpoints
     python converter.py --torch original_pytorch_huggingface/pytorch_model.bin --paddle converted_paddle/model_state.pdparams
     ```
 
-    The converted model will be saved in `converted_paddle/model_state.pdparams`, you should see the terminal output matched the file content in `model_checkpoints/conversion_log.txt`.
+    转换后的权重保存在 `converted_paddle/model_state.pdparams`, 命令行的输出应该与 `model_checkpoints/conversion_log.txt`一致.
 
-3. Run the following commands to make sure the paddlepaddle weights are correct:
+3. 执行如下命令，运行自动化测试脚本，确保模型权重已经转换成功：
 
     ```bash
     python -m pytest ./tests/
     ```
 
-    You should be able to pass the 3 included tests successfully. This means that:
-    - The tokenizer, after a dirty fix, is able to generated the same tokenized ids as the huggingface implementation
-    - The model weights are correct after conversion
+    您应该能看到大多数的测试都能通过，这意味着您的模型权重已经转换成功。（有部分测试函数针对的是微调后的模型）
+    
+## 2. 针对下游任务微调模型
 
-## 2. Train the model for downstream tasks
+按照[原始InfoXLM论文](https://arxiv.org/abs/2007.07834)，我们提供了针对下游任务微调InfoXLM的程序，其中，在调用数据方面，我们使用了方便的`paddlenlp.datasets`API。不过使用`paddlenlp.trainer`相关的API时有时候会出现loss=nan的情况，所以我们手动实现了相关的训练过程，如`trainer_manual.py`所示。
 
-Following the [original InfoXLM paper](https://arxiv.org/abs/2007.07834), we provided the script to finetune the model for XNLI downstream task. We utilized the convenient API provided by `paddlenlp.datasets` to train the model. Unfortunately the Trainer API would still drive into `loss=nan` issue, as mentioned by some peer programmers, so we implemented our manual training process in `trainer_manual.py`. Please use `trainer_api_script.py` with caution as it probably won't run
-
-**To train the model**
+**训练模型**
 
 ```bash
 python trainer_manual.py \
@@ -60,13 +60,13 @@ python trainer_manual.py \
     --eval_lang=zh
 ```
 
-The finetuned weights are provided for your convenience, the download instruction is in "model_checkpoints\finetuned_paddle\download.txt".
+微调过的权重通过网盘提供，下载信息在"model_checkpoints\finetuned_paddle\download.txt".
 
 
 
-## 3. To eval the model
+## 3. 评估模型
 
-There is a cleaner script to evaluate the model on all 15 languages. Please download the finetuned weights as instructed above, then run the command below. 
+我们提供了在15个语言的数据集上进行评估的程序`eval.py`，评估结果如下：
 
 ```bash
 python eval.py
@@ -74,7 +74,7 @@ python eval.py
 
 The results are shown here, comparing to the original paper report:
 
-| Languages     | Paddle Version           | Original Paper |
+| 语言     | Paddle Version           | Original Paper |
 | ------------- | ------------------------ | -------------- |
 | AR            | 0.731                    | 0.742          |
 | BG            | 0.787                    | 0.793          |
@@ -91,26 +91,26 @@ The results are shown here, comparing to the original paper report:
 | UR            | 0.668                    | 0.673          |
 | VI            | 0.758                    | 0.771          |
 | ZH            | 0.760                    | 0.770          |
-| **-average-** | **0.760 **( within 0.5%) | **0.765**      |
+| **平均** | **0.760 **( 误差 0.5%) | **0.765**      |
 
-**Note**
+**讨论**
 
-There are a few key differences between our finetuning process:
+我们认为两个关键的差异在于：
 
-- The original paper used a much bigger batch size (256), while ours was trained with an effective batch size of 32.
-- The original paper evaluated the models for every 5000 steps, while ours was only evaluated at some epoch ends.
+- 原始论文微调使用的batch_size = 256，而我们复现的版本因为硬件限制，实际有效的batch_size是32
+- 原始论文每5000步即评估一次val set精度，我们只在每个epoch结束的时候评估了。
 
-The smaller batch size does hurt the performance by a bit, we noticed that the performance could vary from epoch to epoch wildly after the warm-up period. For example we obtained a checkpoint that scored 0.770 in ZH (almost 1.0% higher than that of the uploaded checkpoint), yet performs not as ideal in other languages.
+更小的batch_size 影响了一些性能，我们注意到有些epoch中，中文的精度可以达到77.0%，比起实际提交的微调版本高出一个点，但是这个epoch在其他语言上的表现平均不如提交的版本。可见更小的batch_size 导致的性能波动还是可观的。
 
-## 4. Exporting to TIPC 
+## 4. 模型推理部署
 
-The exporting scripts has been included for making the model available for basic inference engine. If you have downloaded the finetuned weight and put it in `model_checkpoints/finetuned_paddle`, you can run the following command to generate the JIT optimized model:
+我们提供了模型的导出和部署程序，如果您下载了微调后的权重（finetuned_paddle），您可以直接使用这个权重部署模型，如下：
 
-```
+```bash
 python export_model.py --model_path=model_checkpoints/finetuned_paddle --save_inference_dir ./xnli_exported_model
 ```
 
-Upon successful export, the target folder `xnli_exported_model` would have the following files:
+导出成功后，目标文件夹`xnli_exported_model`会保存如下文件：
 
 ```
 xnli_exported_models/
@@ -123,7 +123,7 @@ xnli_exported_models/
     tokenizer_config.json
 ```
 
-Then the inference service can load and applied using the included `infer.py`:
+使用这个模型进行推理的操作如下：
 
 ```bash
 python .\infer.py \
@@ -133,7 +133,7 @@ python .\infer.py \
   --text "You don't have to stay here.<sep>You can not leave."
 ```
 
-To include an example, input into the text field in the format of `Premise text<sep>Hypothesis text`, the included model should return the following information:
+其中--text参数提供了本次推理的输入数据，格式为"前提<sep>假设"，语言无需额外指定，所有语言输入都能通过提供的sentencepiece模型进行分词。推理输出如下：
 
 ```
 [2022-06-05 23:07:24,056] [    INFO] - Adding <pad> to the vocabulary
@@ -144,3 +144,4 @@ To include an example, input into the text field in the format of `Premise text<
 text: You don't have to stay here. <sep> You can not leave., label_id: 0, prob: 0.8804811835289001, label: contradiction
 ```
 
+推理成功，结果为contradiction（概率0.880），与模型本身一致。
