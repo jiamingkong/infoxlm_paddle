@@ -51,7 +51,7 @@ test_sentences = [
 
 def run_a_sentence(sentence):
     tokens_lhs = true_tokenizer(sentence)
-    tokens_rhs = dirty_fix(my_tokenizer(sentence))
+    tokens_rhs = my_tokenizer(sentence)
     # assert the input_ids are the same using list equal
     assert np.array_equal(
         np.array(tokens_lhs["input_ids"]), np.array(tokens_rhs["input_ids"])
@@ -80,7 +80,7 @@ def forward_using_paddle(sentence):
     # tokenize using true_tokenizer
     tokens_lhs = my_tokenizer(sentence)
     # run it through the model
-    input_ids = paddle.to_tensor([dirty_fix(tokens_lhs)["input_ids"]])
+    input_ids = paddle.to_tensor([tokens_lhs["input_ids"]])
     print(input_ids)
     outputs = my_model(input_ids)
     # get the last hidden state

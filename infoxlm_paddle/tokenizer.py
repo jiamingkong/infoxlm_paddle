@@ -160,6 +160,8 @@ class InfoXLMTokenizer(AlbertEnglishTokenizer):
 
         # TODO: the offset is now changed manually, but this has to change.
         self.offset = 1
+        # self.cls_token_id = 0
+        # self.sep_token_id = 2
 
     @property
     def vocab_size(self):
@@ -268,8 +270,11 @@ class InfoXLMTokenizer(AlbertEnglishTokenizer):
         Returns:
             :obj:`List[int]`: List of `input IDs <../glossary.html#input-ids>`__ with the appropriate special tokens.
         """
-        sep = [self.sep_token_id]
-        cls = [self.cls_token_id]
+        # sep = [self.sep_token_id]
+        # cls = [self.cls_token_id]
+        # TODO: fix it when dirty_fix is no longer required
+        sep = [2]
+        cls = [0]
         if token_ids_1 is None:
             return cls + token_ids_0 + sep
         return cls + token_ids_0 + sep + token_ids_1 + sep

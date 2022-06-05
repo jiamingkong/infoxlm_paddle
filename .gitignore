@@ -133,3 +133,5 @@ model_checkpoints/converted_paddle/*.pdparams
 model_checkpoints/original_pytorch_huggingface/*.bin
 
 .vscode/
+*.ipynb
+.ipynb_checkpoints/
