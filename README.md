@@ -146,3 +146,22 @@ text: You don't have to stay here. <sep> You can not leave., label_id: 0, prob: 
 
 推理成功，结果为contradiction（概率0.880），与模型本身一致。
 
+## 5. Serving 部署
+
+### 5.1 安装Serving依赖
+
+详情请参考[Serving 安装](https://github.com/PaddlePaddle/Serving/blob/v0.9.0/doc/Install_CN.md)。在这里我们推荐使用linux docker的方式来安装，原生版本无论在windows还是unix环境中不可控因素较难排查。我们提供的Git代码经测试可以在windows + linux docker cpu only 的版本中成功部署。
+
+```
+# 启动 CPU Docker
+docker pull registry.baidubce.com/paddlepaddle/serving:0.9.0-devel
+docker run -p 9292:9292 --name test_cpu -dit registry.baidubce.com/paddlepaddle/serving:0.9.0-devel bash
+docker exec -it test_cpu bash
+git clone https://github.com/PaddlePaddle/Serving
+```
+
+### 5.2 部署推理服务
+
+使用4.1章节中导出的模型，部署推理服务，如下：
+
+```bash

@@ -1,0 +1,134 @@
+WARNING 2022-06-06 08:36:01,746 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 08:36:01,752 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 08:36:01,752 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 08:36:05,779 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 08:36:05,819 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
+    result = function(*args, **kwargs)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 520, in init_helper
+    self._manager = PipelineProcSyncManager()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\util.py", line 142, in PipelineProcSyncManager
+    m.start()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\managers.py", line 553, in start
+    self._process.start()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'PipelineProcSyncManager.<locals>.PipelineManager'
+Classname: DAG.__init__.<locals>.init_helper
+FunctionName: init_helper
+ERROR 2022-06-06 08:36:05,823 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
+    result = function(*args, **kwargs)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\pipeline_server.py", line 51, in init_helper
+    self._dag_executor = dag.DAGExecutor(response_op, dag_conf, worker_idx)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 94, in __init__
+    unpack_rpc_func) = self._dag.build()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 828, in build
+    unpack_func) = self._build_dag(self._response_op)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 756, in _build_dag
+    channel = self._gen_channel(channel_name_gen)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 583, in _gen_channel
+    self._manager,
+AttributeError: 'DAG' object has no attribute '_manager'
+Classname: PipelineServicer.__init__.<locals>.init_helper
+FunctionName: init_helper
+WARNING 2022-06-06 08:37:32,098 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 08:37:32,101 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 08:37:32,102 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 08:37:32,103 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 08:37:32,104 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 08:37:32,105 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 08:37:32,105 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 08:37:32,106 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 08:37:32,107 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 08:37:32,108 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 08:37:32,109 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 08:37:32,110 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 08:37:32,111 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 08:37:32,112 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 08:37:32,113 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 08:37:32,114 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 08:37:32,115 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 08:37:32,116 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 08:37:32,117 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 08:37:32,117 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 08:37:32,118 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 08:37:32,119 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 08:37:36,139 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 08:37:36,165 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
+    result = function(*args, **kwargs)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 520, in init_helper
+    self._manager = PipelineProcSyncManager()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\util.py", line 142, in PipelineProcSyncManager
+    m.start()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\managers.py", line 553, in start
+    self._process.start()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'PipelineProcSyncManager.<locals>.PipelineManager'
+Classname: DAG.__init__.<locals>.init_helper
+FunctionName: init_helper
+ERROR 2022-06-06 08:37:36,171 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
+    result = function(*args, **kwargs)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\pipeline_server.py", line 51, in init_helper
+    self._dag_executor = dag.DAGExecutor(response_op, dag_conf, worker_idx)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 94, in __init__
+    unpack_rpc_func) = self._dag.build()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 828, in build
+    unpack_func) = self._build_dag(self._response_op)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 756, in _build_dag
+    channel = self._gen_channel(channel_name_gen)
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 583, in _gen_channel
+    self._manager,
+AttributeError: 'DAG' object has no attribute '_manager'
+Classname: PipelineServicer.__init__.<locals>.init_helper
+FunctionName: init_helper

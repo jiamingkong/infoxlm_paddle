@@ -1,0 +1,13 @@
+feed_var {
+  name: "input_ids"
+  alias_name: "input_ids"
+  is_lod_tensor: false
+  feed_type: 0
+}
+fetch_var {
+  name: "linear_149.tmp_1"
+  alias_name: "linear_149.tmp_1"
+  is_lod_tensor: false
+  fetch_type: 1
+  shape: 3
+}
