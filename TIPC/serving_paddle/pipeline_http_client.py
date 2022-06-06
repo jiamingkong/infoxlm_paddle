@@ -18,14 +18,15 @@ import json
 
 def get_args(add_help=True):
     import argparse
-    parser = argparse.ArgumentParser(
-        description='Paddle Serving', add_help=add_help)
+
+    parser = argparse.ArgumentParser(description="Paddle Serving", add_help=add_help)
 
     parser.add_argument(
         "--text",
         default="You don't have to stay there.<sep>You can leave.",
         type=str,
-        help="XNLI Premise <sep> Hypothesis Text")
+        help="XNLI Premise <sep> Hypothesis Text",
+    )
     args = parser.parse_args()
     return args
 
@@ -34,11 +35,7 @@ def main(args):
     url = "http://127.0.0.1:18080/infoxlm/prediction"
     logid = 10000
 
-    data = {
-        "key": ["text"],
-        "value": [args.text],
-        "logid": logid
-    }
+    data = {"key": ["text"], "value": [args.text], "logid": logid}
     # send requests
     r = requests.post(url=url, data=json.dumps(data))
     print(r.json())

@@ -1,27 +1,27 @@
-WARNING 2022-06-06 08:36:01,746 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
-WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] retry not set, use default: 1
-WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
-WARNING 2022-06-06 08:36:01,747 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
-WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
-WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
-WARNING 2022-06-06 08:36:01,748 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
-WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
-WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
-WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] retry not set, use default: 1
-WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
-WARNING 2022-06-06 08:36:01,749 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
-WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] workdir not set, use default: 
-WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
-WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] devices not set, use default: 
-WARNING 2022-06-06 08:36:01,750 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
-WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
-WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
-WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
-WARNING 2022-06-06 08:36:01,751 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
-WARNING 2022-06-06 08:36:01,752 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
-WARNING 2022-06-06 08:36:01,752 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
-WARNING 2022-06-06 08:36:05,779 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
-ERROR 2022-06-06 08:36:05,819 [error_catch.py:125] 
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 09:59:14,527 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 09:59:14,528 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 09:59:14,529 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 09:59:14,529 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 09:59:18,562 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 09:59:18,584 [error_catch.py:125] 
 Log_id: 0
 Traceback (most recent call last):
   File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
@@ -45,7 +45,7 @@ Traceback (most recent call last):
 AttributeError: Can't pickle local object 'PipelineProcSyncManager.<locals>.PipelineManager'
 Classname: DAG.__init__.<locals>.init_helper
 FunctionName: init_helper
-ERROR 2022-06-06 08:36:05,823 [error_catch.py:125] 
+ERROR 2022-06-06 09:59:18,585 [error_catch.py:125] 
 Log_id: 0
 Traceback (most recent call last):
   File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
@@ -65,70 +65,253 @@ Traceback (most recent call last):
 AttributeError: 'DAG' object has no attribute '_manager'
 Classname: PipelineServicer.__init__.<locals>.init_helper
 FunctionName: init_helper
-WARNING 2022-06-06 08:37:32,098 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
-WARNING 2022-06-06 08:37:32,101 [pipeline_server.py:519] [CONF] retry not set, use default: 1
-WARNING 2022-06-06 08:37:32,102 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
-WARNING 2022-06-06 08:37:32,103 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
-WARNING 2022-06-06 08:37:32,104 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
-WARNING 2022-06-06 08:37:32,105 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
-WARNING 2022-06-06 08:37:32,105 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
-WARNING 2022-06-06 08:37:32,106 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
-WARNING 2022-06-06 08:37:32,107 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
-WARNING 2022-06-06 08:37:32,108 [pipeline_server.py:519] [CONF] retry not set, use default: 1
-WARNING 2022-06-06 08:37:32,109 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
-WARNING 2022-06-06 08:37:32,110 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
-WARNING 2022-06-06 08:37:32,111 [pipeline_server.py:519] [CONF] workdir not set, use default: 
-WARNING 2022-06-06 08:37:32,112 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
-WARNING 2022-06-06 08:37:32,113 [pipeline_server.py:519] [CONF] devices not set, use default: 
-WARNING 2022-06-06 08:37:32,114 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
-WARNING 2022-06-06 08:37:32,115 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
-WARNING 2022-06-06 08:37:32,116 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
-WARNING 2022-06-06 08:37:32,117 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
-WARNING 2022-06-06 08:37:32,117 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
-WARNING 2022-06-06 08:37:32,118 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
-WARNING 2022-06-06 08:37:32,119 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
-WARNING 2022-06-06 08:37:36,139 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
-ERROR 2022-06-06 08:37:36,165 [error_catch.py:125] 
+WARNING 2022-06-06 10:07:13,356 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 10:07:13,357 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:07:13,357 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 10:07:13,358 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 10:07:13,358 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 10:07:13,358 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 10:07:13,358 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 10:07:13,359 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 10:07:13,359 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 10:07:13,359 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:07:13,359 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 10:07:13,360 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 10:07:13,360 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 10:07:13,360 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 10:07:13,361 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 10:07:13,361 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 10:07:13,361 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 10:07:13,362 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 10:07:13,362 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 10:07:13,362 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 10:07:13,362 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 10:07:13,363 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 10:07:17,380 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 10:19:25,827 [app.py:1891] Exception on /infoxlm/prediction [POST]
+Traceback (most recent call last):
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\flask\app.py", line 1945, in full_dispatch_request
+    self.try_trigger_before_first_request_functions()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\flask\app.py", line 1993, in try_trigger_before_first_request_functions
+    func()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\web_service.py", line 388, in init
+    self._launch_web_service()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\web_service.py", line 282, in _launch_web_service
+    self.client = Client()
+  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_client\client.py", line 149, in __init__
+    from .serving_client import PredictorRes
+ModuleNotFoundError: No module named 'paddle_serving_client.serving_client'
+WARNING 2022-06-06 10:42:33,426 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 10:42:33,427 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:42:33,427 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 10:42:33,427 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 10:42:33,428 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 10:42:33,428 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 10:42:33,428 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 10:42:33,428 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 10:42:33,429 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 10:42:33,429 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:42:33,429 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 10:42:33,429 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 10:42:33,430 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 10:42:33,430 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 10:42:33,430 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 10:42:33,430 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 10:42:33,431 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 10:42:33,431 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 10:42:33,431 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 10:42:33,431 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 10:42:33,432 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 10:42:33,432 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 10:42:33,437 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 10:42:33,624 [error_catch.py:125] 
 Log_id: 0
 Traceback (most recent call last):
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1548, in from_pretrained
+    resolved_vocab_files[file_id] = get_path_from_url(
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 162, in get_path_from_url
+    fullpath = _download(url, root_dir, md5sum)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 198, in _download
+    raise RuntimeError("Downloading from {} failed with code "
+RuntimeError: Downloading from https://bj.bcebos.com/paddlenlp/models/community/C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle/spiece.model failed with code 404!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/error_catch.py", line 97, in wrapper
     res = func(*args, **kw)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
-    result = function(*args, **kwargs)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 520, in init_helper
-    self._manager = PipelineProcSyncManager()
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\util.py", line 142, in PipelineProcSyncManager
-    m.start()
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\managers.py", line 553, in start
-    self._process.start()
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\process.py", line 121, in start
-    self._popen = self._Popen(self)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\context.py", line 327, in _Popen
-    return Popen(process_obj)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
-    reduction.dump(process_obj, to_child)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\multiprocessing\reduction.py", line 60, in dump
-    ForkingPickler(file, protocol).dump(obj)
-AttributeError: Can't pickle local object 'PipelineProcSyncManager.<locals>.PipelineManager'
-Classname: DAG.__init__.<locals>.init_helper
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/operator.py", line 1629, in init_helper
+    self.init_op()
+  File "/mnt/c/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/TIPC/serving_paddle/web_service.py", line 34, in init_op
+    self.tokenizer = InfoXLMTokenizer.from_pretrained("C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle")
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1555, in from_pretrained
+    raise RuntimeError(
+RuntimeError: Can't load tokenizer for 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle'.
+Please make sure that 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle' is:
+- a correct model-identifier of built-in pretrained models,
+- or a correct model-identifier of community-contributed pretrained models,
+- or the correct path to a directory containing relevant tokenizer files.
+
+Classname: Op._initialize.<locals>.init_helper
 FunctionName: init_helper
-ERROR 2022-06-06 08:37:36,171 [error_catch.py:125] 
+WARNING 2022-06-06 10:45:13,953 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 10:45:13,954 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:45:13,954 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 10:45:13,955 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 10:45:13,955 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 10:45:13,955 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 10:45:13,955 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 10:45:13,956 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 10:45:13,956 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 10:45:13,956 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:45:13,957 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 10:45:13,957 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 10:45:13,957 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 10:45:13,958 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 10:45:13,958 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 10:45:13,958 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 10:45:13,958 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 10:45:13,959 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 10:45:13,959 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 10:45:13,959 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 10:45:13,960 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 10:45:13,960 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 10:45:13,964 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 10:45:14,088 [error_catch.py:125] 
 Log_id: 0
 Traceback (most recent call last):
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 97, in wrapper
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1548, in from_pretrained
+    resolved_vocab_files[file_id] = get_path_from_url(
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 162, in get_path_from_url
+    fullpath = _download(url, root_dir, md5sum)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 198, in _download
+    raise RuntimeError("Downloading from {} failed with code "
+RuntimeError: Downloading from https://bj.bcebos.com/paddlenlp/models/community/C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle/spiece.model failed with code 404!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/error_catch.py", line 97, in wrapper
     res = func(*args, **kw)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\error_catch.py", line 163, in wrapper
-    result = function(*args, **kwargs)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\pipeline_server.py", line 51, in init_helper
-    self._dag_executor = dag.DAGExecutor(response_op, dag_conf, worker_idx)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 94, in __init__
-    unpack_rpc_func) = self._dag.build()
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 828, in build
-    unpack_func) = self._build_dag(self._response_op)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 756, in _build_dag
-    channel = self._gen_channel(channel_name_gen)
-  File "C:\Users\kinet\anaconda3\envs\paddle\lib\site-packages\paddle_serving_server\pipeline\dag.py", line 583, in _gen_channel
-    self._manager,
-AttributeError: 'DAG' object has no attribute '_manager'
-Classname: PipelineServicer.__init__.<locals>.init_helper
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/operator.py", line 1629, in init_helper
+    self.init_op()
+  File "/mnt/c/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/TIPC/serving_paddle/web_service.py", line 34, in init_op
+    self.tokenizer = InfoXLMTokenizer.from_pretrained("C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle")
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1555, in from_pretrained
+    raise RuntimeError(
+RuntimeError: Can't load tokenizer for 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle'.
+Please make sure that 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle' is:
+- a correct model-identifier of built-in pretrained models,
+- or a correct model-identifier of community-contributed pretrained models,
+- or the correct path to a directory containing relevant tokenizer files.
+
+Classname: Op._initialize.<locals>.init_helper
+FunctionName: init_helper
+WARNING 2022-06-06 10:46:47,950 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 10:46:47,951 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:46:47,951 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 10:46:47,952 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 10:46:47,952 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 10:46:47,952 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 10:46:47,952 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 10:46:47,953 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 10:46:47,953 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 10:46:47,953 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:46:47,954 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 10:46:47,954 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 10:46:47,954 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 10:46:47,954 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 10:46:47,955 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 10:46:47,955 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 10:46:47,955 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 10:46:47,955 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 10:46:47,956 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 10:46:47,956 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 10:46:47,956 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 10:46:47,956 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 10:46:47,961 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 10:46:48,162 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1548, in from_pretrained
+    resolved_vocab_files[file_id] = get_path_from_url(
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 162, in get_path_from_url
+    fullpath = _download(url, root_dir, md5sum)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 198, in _download
+    raise RuntimeError("Downloading from {} failed with code "
+RuntimeError: Downloading from https://bj.bcebos.com/paddlenlp/models/community/C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle/spiece.model failed with code 404!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/operator.py", line 1629, in init_helper
+    self.init_op()
+  File "/mnt/c/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/TIPC/serving_paddle/web_service.py", line 34, in init_op
+    self.tokenizer = InfoXLMTokenizer.from_pretrained("C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle")
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1555, in from_pretrained
+    raise RuntimeError(
+RuntimeError: Can't load tokenizer for 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle'.
+Please make sure that 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle' is:
+- a correct model-identifier of built-in pretrained models,
+- or a correct model-identifier of community-contributed pretrained models,
+- or the correct path to a directory containing relevant tokenizer files.
+
+Classname: Op._initialize.<locals>.init_helper
+FunctionName: init_helper
+WARNING 2022-06-06 10:51:14,344 [pipeline_server.py:519] [CONF] build_dag_each_worker not set, use default: False
+WARNING 2022-06-06 10:51:14,345 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:51:14,345 [pipeline_server.py:519] [CONF] client_type not set, use default: brpc
+WARNING 2022-06-06 10:51:14,346 [pipeline_server.py:519] [CONF] use_profile not set, use default: False
+WARNING 2022-06-06 10:51:14,346 [pipeline_server.py:519] [CONF] channel_size not set, use default: 0
+WARNING 2022-06-06 10:51:14,346 [pipeline_server.py:519] [CONF] tracer not set, use default: {}
+WARNING 2022-06-06 10:51:14,346 [pipeline_server.py:519] [CONF] channel_recv_frist_arrive not set, use default: False
+WARNING 2022-06-06 10:51:14,347 [pipeline_server.py:519] [CONF] interval_s not set, use default: -1
+WARNING 2022-06-06 10:51:14,347 [pipeline_server.py:519] [CONF] timeout not set, use default: -1
+WARNING 2022-06-06 10:51:14,347 [pipeline_server.py:519] [CONF] retry not set, use default: 1
+WARNING 2022-06-06 10:51:14,347 [pipeline_server.py:519] [CONF] batch_size not set, use default: 1
+WARNING 2022-06-06 10:51:14,348 [pipeline_server.py:519] [CONF] auto_batching_timeout not set, use default: -1
+WARNING 2022-06-06 10:51:14,348 [pipeline_server.py:519] [CONF] workdir not set, use default: 
+WARNING 2022-06-06 10:51:14,348 [pipeline_server.py:519] [CONF] thread_num not set, use default: 2
+WARNING 2022-06-06 10:51:14,348 [pipeline_server.py:519] [CONF] devices not set, use default: 
+WARNING 2022-06-06 10:51:14,349 [pipeline_server.py:519] [CONF] mem_optim not set, use default: True
+WARNING 2022-06-06 10:51:14,349 [pipeline_server.py:519] [CONF] ir_optim not set, use default: False
+WARNING 2022-06-06 10:51:14,349 [pipeline_server.py:519] [CONF] precision not set, use default: fp32
+WARNING 2022-06-06 10:51:14,349 [pipeline_server.py:519] [CONF] use_calib not set, use default: False
+WARNING 2022-06-06 10:51:14,350 [pipeline_server.py:519] [CONF] use_mkldnn not set, use default: False
+WARNING 2022-06-06 10:51:14,350 [pipeline_server.py:519] [CONF] mkldnn_cache_capacity not set, use default: 0
+WARNING 2022-06-06 10:51:14,350 [pipeline_server.py:519] [CONF] min_subgraph_size not set, use default: 3
+WARNING 2022-06-06 10:51:14,355 [operator.py:343] infoxlm Failed to launch local rpc service: local_service_handler is None.
+ERROR 2022-06-06 10:51:28,362 [error_catch.py:125] 
+Log_id: 0
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1548, in from_pretrained
+    resolved_vocab_files[file_id] = get_path_from_url(
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 162, in get_path_from_url
+    fullpath = _download(url, root_dir, md5sum)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/utils/downloader.py", line 198, in _download
+    raise RuntimeError("Downloading from {} failed with code "
+RuntimeError: Downloading from https://bj.bcebos.com/paddlenlp/models/community/C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle/spiece.model failed with code 404!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/error_catch.py", line 97, in wrapper
+    res = func(*args, **kw)
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddle_serving_server/pipeline/operator.py", line 1629, in init_helper
+    self.init_op()
+  File "/mnt/c/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/TIPC/serving_paddle/web_service.py", line 34, in init_op
+    self.tokenizer = InfoXLMTokenizer.from_pretrained("C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle")
+  File "/home/kinetical/anaconda3/lib/python3.9/site-packages/paddlenlp/transformers/tokenizer_utils_base.py", line 1555, in from_pretrained
+    raise RuntimeError(
+RuntimeError: Can't load tokenizer for 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle'.
+Please make sure that 'C:/Users/kinet/OneDrive/Speech Recognition/infoxlm_paddle/model_checkpoints/finetuned_paddle' is:
+- a correct model-identifier of built-in pretrained models,
+- or a correct model-identifier of community-contributed pretrained models,
+- or the correct path to a directory containing relevant tokenizer files.
+
+Classname: Op._initialize.<locals>.init_helper
 FunctionName: init_helper

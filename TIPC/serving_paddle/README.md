@@ -53,8 +53,8 @@ Serving部署依赖于`jit.save`得到的Inference模型，如果没有Inference
 并使用下面命令，将静态图模型转换为服务化部署模型，即`xlm_server`文件夹中的模型。
 
 ```bash
-cd deploy/serving_python
-python -m paddle_serving_client.convert --dirname  ../../xlm_infer/ --model_filename inference.pdmodel --params_filename inference.pdiparams --serving_server xlm_server --serving_client xlm_client
+cd TIPC/serving_paddle
+python -m paddle_serving_client.convert --dirname  ../../xnli_exported_models/ --model_filename inference.pdmodel --params_filename inference.pdiparams --serving_server infoxlm_server --serving_client infoxlm_client
 ```
 
 最终`serving_server`文件夹中会生成server端所用到的内容，`serving_client`文件夹中生成client端所用到的内容。

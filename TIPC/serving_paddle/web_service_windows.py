@@ -111,7 +111,9 @@ class InfoXLMService(WebService):
 # define the service class
 uci_service = InfoXLMService(name="infoxlm")
 # load config and prepare the service
-uci_service.prepare_server(workdir="./", port=18080)
-uci_service.prepare_pipeline_config("config.yml")
+# uci_service.prepare_pipeline_config("config.yml")
 # start the service
-uci_service.run_service()
+uci_service.load_model_config("./infoxlm_server")
+uci_service.prepare_server(workdir="./", port=18080)
+# uci_service.run_service()
+uci_service.run_web_service()

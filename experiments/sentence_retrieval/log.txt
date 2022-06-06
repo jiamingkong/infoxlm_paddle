@@ -1,0 +1,56 @@
+Testing X = ar
+ar -> en accuracy: 0.591
+en -> ar accuracy: 0.686
+Testing X = ar done
+Testing X = bg
+bg -> en accuracy: 0.787
+en -> bg accuracy: 0.787
+Testing X = bg done
+Testing X = de
+de -> en accuracy: 0.939
+en -> de accuracy: 0.951
+Testing X = de done
+Testing X = el
+el -> en accuracy: 0.622
+en -> el accuracy: 0.726
+Testing X = el done
+Testing X = es
+es -> en accuracy: 0.882
+en -> es accuracy: 0.872
+Testing X = es done
+Testing X = fr
+fr -> en accuracy: 0.794
+en -> fr accuracy: 0.840
+Testing X = fr done
+Testing X = hi
+hi -> en accuracy: 0.871
+en -> hi accuracy: 0.883
+Testing X = hi done
+Testing X = ru
+ru -> en accuracy: 0.838
+en -> ru accuracy: 0.857
+Testing X = ru done
+Testing X = sw
+sw -> en accuracy: 0.395
+en -> sw accuracy: 0.408
+Testing X = sw done
+Testing X = th
+th -> en accuracy: 0.850
+en -> th accuracy: 0.912
+Testing X = th done
+Testing X = tr
+tr -> en accuracy: 0.832
+en -> tr accuracy: 0.847
+Testing X = tr done
+Testing X = ur
+ur -> en accuracy: 0.730
+en -> ur accuracy: 0.733
+Testing X = ur done
+Testing X = vi
+vi -> en accuracy: 0.896
+en -> vi accuracy: 0.920
+Testing X = vi done
+Testing X = zh
+zh -> en accuracy: 0.864
+en -> zh accuracy: 0.864
+Testing X = zh done
