@@ -36,6 +36,7 @@ tokenizer = InfoXLMTokenizer(
 if not args.quick_verify:
     base_model = InfoXLMModel.from_pretrained(PADDLE_WEIGHT)
     model = InfoXLMForSequenceClassification(base_model, num_classes=3, dropout=0.05)
+    print(model.roberta.embeddings.word_embeddings.weight.std())
 else:
     model = InfoXLMForSequenceClassification.from_pretrained(
         os.path.join(HERE, "model_checkpoints/finetuned_paddle")

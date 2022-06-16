@@ -92,8 +92,8 @@ def parse_args():
     parser.add_argument(
         "--scale_loss",
         type=float,
-        default=2 ** 10,
-        help="The value of scale_loss for fp16.",
+        default=1,
+        help="The value of scale_loss for fp16. Sometimes you may want to set it to 16",
     )
     parser.add_argument(
         "--cache_dir", type=str, default="data_caches", help="cache_dir.",
