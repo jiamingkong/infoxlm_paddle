@@ -54,3 +54,15 @@ Testing X = zh
 zh -> en accuracy: 0.864
 en -> zh accuracy: 0.864
 Testing X = zh done
+Testing X = ar
+Testing X = ar
+ar -> en accuracy: 0.591
+en -> ar accuracy: 0.686
+Testing X = ar done
+Testing X = bg
+Testing X = ar
+Testing X = ar
+ar -> en accuracy: 0.591
+en -> ar accuracy: 0.686
+Testing X = ar done
+Testing X = bg

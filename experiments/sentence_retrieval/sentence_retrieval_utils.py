@@ -9,6 +9,7 @@ import numpy as np
 from data_utils import *
 
 from infoxlm_paddle import InfoXLMModel, InfoXLMTokenizer
+from tqdm import tqdm
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..", "..")
@@ -20,6 +21,10 @@ tokenizer = InfoXLMTokenizer.from_pretrained(
 model = InfoXLMModel.from_pretrained(
     os.path.join(ROOT, "model_checkpoints/converted_paddle")
 )
+
+print(
+    model.embeddings.word_embeddings.weight.std()
+)  # to see if the correct weight is loaded, should see 0.1529
 
 model.eval()
 
@@ -103,7 +108,7 @@ class SentenceRetrieval(object):
 
     def load_dataset(self):
         filenames = get_language_pair_filenames(self.languageA, self.languageB)
-        for i, j in read_language_pairs(filenames):
+        for i, j in tqdm(read_language_pairs(filenames), total=1000):
             self.add_sentence_pair(i, j)
 
 

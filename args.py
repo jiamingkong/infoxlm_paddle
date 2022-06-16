@@ -92,7 +92,7 @@ def parse_args():
     parser.add_argument(
         "--scale_loss",
         type=float,
-        default=2 ** 15,
+        default=2 ** 10,
         help="The value of scale_loss for fp16.",
     )
     parser.add_argument(
@@ -103,6 +103,11 @@ def parse_args():
     )
     parser.add_argument(
         "--eval_lang", type=str, default="zh", help="The eval language",
+    )
+    parser.add_argument(
+        "--quick_verify",
+        action="store_true",
+        help="Load the finetuned checkpoint, train 10 steps and eval",
     )
     args = parser.parse_args()
 

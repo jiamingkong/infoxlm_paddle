@@ -58,13 +58,39 @@ conda install paddlepaddle-gpu==2.3.0 cudatoolkit=11.2 -c https://mirrors.tuna.t
 python trainer_manual.py \
     --train_batch_size=8 \
     --max_length=128 \
-    --learning_rate=1e-5 \
+    --learning_rate=5e-5 \
     --fp16 \
     --train_lang=en \
-    --eval_lang=zh
+    --gradient_accumulation_steps 8
 ```
 
-微调过的权重通过网盘提供，下载信息在"model_checkpoints\finetuned_paddle\download.txt".
+微调过的权重通过网盘提供，下载信息在"model_checkpoints\finetuned_paddle\download.txt". 
+
+**快速验证训练和微调效果**
+
+以下命令会直接加载网盘提供的权重，并且训练模型两步，然后直接运行validation和test推理，并且计算出gap_score。
+
+```bash
+python trainer_manual.py \
+    --train_batch_size=4 \
+    --max_length=64 \
+    --learning_rate=1e-8 \
+    --train_lang=en \
+    --eval_lang=zh \
+    --logging_steps=2 \
+    --fp16 \
+    --save_steps=2 \
+    --quick_verify
+```
+
+日志中会多出一行`global_steps 2 loss: 0.24736906`，loss较低是因为模型已经训练好了，这里只是验证梯度流是完整的。同时，程序会自动完成15个语言的XNLI 验证集、测试集效果检验。并且计算出gap_score（英文的性能减去其他语言的平均性能，越接近0越说明模型跨语言泛化能力好）：
+
+我们提供的权重有如下的gap_score，10.28%的分数略好于论文报告。
+
+```
+Step 2 val_gap_score -0.1034 test_gap_score -0.1028, the lower the better
+```
+
 
 
 

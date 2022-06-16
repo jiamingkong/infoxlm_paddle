@@ -23,14 +23,23 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PADDLE_WEIGHT = os.path.join(HERE, "model_checkpoints/converted_paddle")
 SPM_MODEL = os.path.join(PADDLE_WEIGHT, "sentencepiece.bpe.model")
 
+# print(model.roberta.embeddings.word_embeddings.weight.std())
+# import pdb; pdb.set_trace()
+logger = logging.getLogger(__name__)
+args = parse_args()
+
+
 tokenizer = InfoXLMTokenizer(
     sentencepiece_model_file=SPM_MODEL, do_lower_case=False, remove_space=True
 )
-base_model = InfoXLMModel.from_pretrained(PADDLE_WEIGHT)
-model = InfoXLMForSequenceClassification(base_model, num_classes=3, dropout=0.05)
 
-logger = logging.getLogger(__name__)
-args = parse_args()
+if not args.quick_verify:
+    base_model = InfoXLMModel.from_pretrained(PADDLE_WEIGHT)
+    model = InfoXLMForSequenceClassification(base_model, num_classes=3, dropout=0.05)
+else:
+    model = InfoXLMForSequenceClassification.from_pretrained(
+        os.path.join(HERE, "model_checkpoints/finetuned_paddle")
+    )
 
 
 def as_tensor(t):
@@ -41,16 +50,14 @@ def as_tensor(t):
 def evaluate(args, model, tokenizer, lang, metric, val=True):
     model.eval()
     metric.reset()
-    splt = "valid" if val else "test"
+    splt = "dev" if val else "test"
     validation_loader = XNLI_Dataset(lang, split=splt)
     for batch in tqdm(
         validation_loader.get_batch_iterator(args.eval_batch_size), leave=False
     ):
         premises, hypotheses, labels = batch
         encoded_inputs = tokenizer(premises, hypotheses, padding=True)
-        input_token_ids = paddle.to_tensor([encoded_inputs["input_ids"]])
-        token_type_ids = paddle.to_tensor([encoded_inputs["token_type_ids"]])
-        # logits = model(input_token_ids, token_type_ids=token_type_ids)
+        input_token_ids = paddle.to_tensor(encoded_inputs["input_ids"])
         logits = model(input_token_ids)
         correct = metric.compute(logits, as_tensor(labels))
         metric.update(correct)
@@ -145,16 +152,12 @@ def main(args):
 
                 encoded_inputs = tokenizer(premises, hypotheses, padding=True)
                 input_token_ids = paddle.to_tensor(encoded_inputs["input_ids"])
-                token_type_ids = paddle.to_tensor(encoded_inputs["token_type_ids"])
-                logits = model(input_token_ids, token_type_ids=token_type_ids)
-                # loss = outputs[0] / args.gradient_accumulation_steps
+                logits = model(input_token_ids)
                 loss = (
                     ce_loss(logits, as_tensor(labels))
                     / args.gradient_accumulation_steps
                 )
-                print("\n", loss.item(), premises, hypotheses, labels, logits)
                 tr_loss += loss.item()
-                # import pdb; pdb.set_trace()
             if args.fp16:
                 scaled = scaler.scale(loss)
                 scaled.backward()
@@ -163,10 +166,11 @@ def main(args):
 
             if step % args.gradient_accumulation_steps == 0:
                 if args.fp16:
-                    scaler.minimize(optimizer, scaled)
+                    scaler.step(optimizer)
+                    scaler.update()
                 else:
                     optimizer.step()
-                optimizer.clear_grad()
+                optimizer.clear_grad(set_to_zero=False)
                 progress_bar.update(1)
                 global_steps += 1
 
@@ -194,28 +198,42 @@ def main(args):
                     val_avg_acc = 0
                     for lang in XNLI_LANGS:
                         val_acc = evaluate(
-                            model, ds, lang, metric, val=True, params=params
+                            args, model, tokenizer, lang, metric, val=True
                         )
                         results_dict[f"val_{lang}_acc"] = val_acc
                         val_avg_acc += val_acc
-                        logger.info(f"##########  val_{lang}_acc {val_acc} ##########")
-                        print(f"##########  val_{lang}_acc {val_acc} ##########")
+                        logger.info(
+                            f"##########  val_{lang}_acc {val_acc:.4f} ##########"
+                        )
 
                     results_dict["val_avg_acc"] = val_avg_acc / 15
+                    results_dict["val_other_acc"] = (
+                        val_avg_acc - results_dict["val_en_acc"]
+                    ) / 14
+                    results_dict["val_gap_score"] = (
+                        results_dict["val_en_acc"] - results_dict["val_other_acc"]
+                    )
 
                     # test
                     test_avg_acc = 0
                     for lang in XNLI_LANGS:
+                        # ds = XNLI_Dataset(lang, "test")
                         test_acc = evaluate(
-                            model, ds, lang, metric, val=False, params=params
+                            args, model, tokenizer, lang, metric, val=False
                         )
                         results_dict[f"test_{lang}_acc"] = test_acc
                         test_avg_acc += test_acc
                         logger.info(
-                            f"##########  test_{lang}_acc {test_acc} ##########"
+                            f"##########  test_{lang}_acc {test_acc:.4f} ##########"
                         )
-                        print(f"##########  test_{lang}_acc {test_acc} ##########")
+                        # print(f"##########  test_{lang}_acc {test_acc} ##########")
                     results_dict["test_avg_acc"] = test_avg_acc / 15
+                    results_dict["test_other_acc"] = (
+                        test_avg_acc - results_dict["test_en_acc"]
+                    ) / 14
+                    results_dict["test_gap_score"] = (
+                        results_dict["test_en_acc"] - results_dict["test_other_acc"]
+                    )
 
                     for k, v in results_dict.items():
                         writer.add_scalar(f"eval/{k}", v, global_steps)
@@ -224,14 +242,16 @@ def main(args):
 
                     val_avg_acc = results_dict["val_avg_acc"]
                     test_avg_acc = results_dict["test_avg_acc"]
+                    val_gap_score = results_dict["val_gap_score"]
+                    test_gap_score = results_dict["test_gap_score"]
 
                     if val_avg_acc >= max_val_acc:
                         max_val_acc = val_avg_acc
                         logger.info(
-                            f"########## Step {global_steps} val_avg_acc {max_val_acc} test_avg_acc {test_avg_acc} ##########"
+                            f"########## Step {global_steps} val_avg_acc {max_val_acc:.4f} test_avg_acc {test_avg_acc:.4f} ##########"
                         )
-                        print(
-                            f"########## Step {global_steps} val_avg_acc {max_val_acc} test_avg_acc {test_avg_acc} ##########"
+                        logger.info(
+                            f"########## Step {global_steps} val_gap_score {-val_gap_score:.4f} test_gap_score {-test_gap_score:.4f}, the lower the better"
                         )
 
                     output_dir = os.path.join(

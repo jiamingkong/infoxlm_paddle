@@ -102,7 +102,7 @@ class RobertaEmbeddings(nn.Layer):
         input_embedings = self.word_embeddings(input_ids)  # this part is ok
         position_embeddings = self.position_embeddings(position_ids)  # this is also ok
         token_type_embeddings = self.token_type_embeddings(token_type_ids)
-        # print(token_type_embeddings)
+        # print(input_embedings.shape, position_embeddings.shape, token_type_embeddings.shape)
         embeddings = input_embedings + position_embeddings + token_type_embeddings
 
         embeddings = self.LayerNorm(embeddings)
@@ -440,7 +440,7 @@ class InfoXLMForQuestionAnswering(InfoXLMPretrainedModel):
         super(InfoXLMForQuestionAnswering, self).__init__()
         self.roberta = roberta  # allow roberta to be config
         self.classifier = nn.Linear(self.roberta.config["hidden_size"], 2)
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def forward(
         self,
@@ -545,7 +545,7 @@ class InfoXLMForSequenceClassification(InfoXLMPretrainedModel):
         self.classifier = RobertaClassificationHead(
             self.roberta.config["hidden_size"], num_classes, dropout=dropout
         )
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def forward(
         self,
@@ -642,7 +642,7 @@ class InfoXLMForTokenClassification(InfoXLMPretrainedModel):
             else self.roberta.config["hidden_dropout_prob"]
         )
         self.classifier = nn.Linear(self.roberta.config["hidden_size"], num_classes)
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def forward(
         self,
@@ -720,7 +720,7 @@ class InfoXLMForMultipleChoice(InfoXLMPretrainedModel):
         self.dropout = nn.Dropout(self.roberta.config["hidden_dropout_prob"])
         self.classifier = nn.Linear(self.roberta.config["hidden_size"], 1)
 
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def forward(
         self,
@@ -791,7 +791,7 @@ class InfoXLMForMaskedLM(InfoXLMPretrainedModel):
 
         self.lm_head = InfoXLMLMHead(hidden_size, layer_norm_eps, vocab_size)
 
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def get_output_embeddings(self):
         return self.lm_head.decoder
@@ -912,7 +912,7 @@ class InfoXLMForCausalLM(InfoXLMPretrainedModel):
 
         self.lm_head = InfoXLMLMHead(hidden_size, layer_norm_eps, vocab_size)
 
-        self.apply(self.init_weights)
+        # self.apply(self.init_weights)
 
     def get_output_embeddings(self):
         return self.lm_head.decoder

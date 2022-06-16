@@ -46,8 +46,6 @@ def eval_accuracy(dataset, model, batch_size=8):
     for pre, hyp, lbl in dataset.get_batch_iterator(batch_size):
         encoded_inputs = my_tokenizer(pre, hyp, padding=True)
         input_token_ids = paddle.to_tensor(encoded_inputs["input_ids"])
-        token_type_ids = paddle.to_tensor(encoded_inputs["token_type_ids"])
-
         logits = model(input_token_ids)
         correct = metric.compute(logits, paddle.to_tensor(lbl))
         metric.update(correct)
