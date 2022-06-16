@@ -106,8 +106,9 @@ def main(args):
         beta1=0.9,
         beta2=0.999,
         epsilon=args.adam_epsilon,
-        parameters=model.parameters(),
+        parameters=model.classifier.parameters(),
     )
+    model.roberta.stop_gradient=True
 
     metric = Accuracy()
 
@@ -145,13 +146,14 @@ def main(args):
         step = 0
         for batch in dls:
             model.train()
+            model.roberta.eval()
             with auto_cast(
                 args.fp16, custom_white_list=["layer_norm", "softmax", "gelu"]
             ):
                 premises, hypotheses, labels = batch
                 # tokenize
 
-                encoded_inputs = tokenizer(premises, hypotheses, padding=True)
+                encoded_inputs = tokenizer(premises, hypotheses, padding=True, max_length=params.max_len)
                 input_token_ids = paddle.to_tensor(encoded_inputs["input_ids"])
                 logits = model(input_token_ids)
                 loss = (

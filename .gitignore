@@ -140,3 +140,4 @@ model_checkpoints/*/*.zip
 xnli_export*/
 TIPC/serving_paddle/infoxlm_server/*
 Serving/
+*.zip
