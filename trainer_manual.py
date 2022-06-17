@@ -106,7 +106,7 @@ def main(args):
         beta1=0.9,
         beta2=0.999,
         epsilon=args.adam_epsilon,
-        parameters=model.classifier.parameters(),
+        parameters=model.parameters(),
     )
     model.roberta.stop_gradient=True
 
